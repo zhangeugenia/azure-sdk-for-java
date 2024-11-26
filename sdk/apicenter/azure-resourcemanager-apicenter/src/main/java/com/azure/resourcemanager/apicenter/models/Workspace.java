@@ -137,7 +137,7 @@ public interface Workspace {
     /**
      * The template for Workspace update.
      */
-    interface Update {
+    interface Update extends UpdateStages.WithProperties {
         /**
          * Executes the update request.
          * 
@@ -158,6 +158,18 @@ public interface Workspace {
      * The Workspace update stages.
      */
     interface UpdateStages {
+        /**
+         * The stage of the Workspace update allowing to specify properties.
+         */
+        interface WithProperties {
+            /**
+             * Specifies the properties property: The resource-specific properties for this resource..
+             * 
+             * @param properties The resource-specific properties for this resource.
+             * @return the next definition stage.
+             */
+            Update withProperties(WorkspaceProperties properties);
+        }
     }
 
     /**
@@ -174,4 +186,27 @@ public interface Workspace {
      * @return the refreshed resource.
      */
     Workspace refresh(Context context);
+
+    /**
+     * Imports from the API source (one-time import).
+     * 
+     * @param body The content of the action request.
+     * @throws IllegalArgumentException thrown if parameters fail the validation.
+     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
+     * @return the current status of an async operation.
+     */
+    OperationStatusResult importApiSource(ImportApiSourceRequest body);
+
+    /**
+     * Imports from the API source (one-time import).
+     * 
+     * @param body The content of the action request.
+     * @param context The context to associate with this operation.
+     * @throws IllegalArgumentException thrown if parameters fail the validation.
+     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
+     * @return the current status of an async operation.
+     */
+    OperationStatusResult importApiSource(ImportApiSourceRequest body, Context context);
 }
